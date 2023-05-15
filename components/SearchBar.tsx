@@ -1,26 +1,53 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { Loading } from './Loading';
+import { Header } from './Header';
 
-const SearchButton = () => {
+const SearchButton = ({ onPress }) => {
   return (
-    <TouchableOpacity style={styles.button}>
+    <TouchableOpacity style={styles.button} onPress={onPress}>
       <Icon name="search" size={20} color="#333" />
     </TouchableOpacity>
   );
-}
+};
 
 const SearchBar = () => {
+  const [loading, setLoading] = useState(false);
+  const [searching, setSearching] = useState(false);
+
+  const handleSearch = () => {
+    setSearching(true);
+    setLoading(true);
+
+    // Simula uma busca assíncrona por 3 segundos
+    setTimeout(() => {
+      setLoading(false);
+      setSearching(false);
+    }, 3000);
+  };
+
   return (
-    <View style={styles.container}>
-      <TextInput
-        placeholder="Pesquisar"
-        style={styles.input}
-      />
-      <SearchButton />
-    </View>
+    <>
+      {!loading && (
+        <View style={styles.container}>
+          {!searching && (
+            <>
+              <TextInput
+                placeholder="Pesquisar"
+                style={styles.input}
+              />
+              <SearchButton onPress={handleSearch} />
+            </>
+          )}
+        </View>
+      )}
+      {loading && <Loading />}
+    </>
   );
-}
+};
+
+
 
 const styles = StyleSheet.create({
   container: {
