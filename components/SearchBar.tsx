@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, TextInput, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Loading } from './Loading';
-import { Header } from './Header';
 
 const SearchButton = ({ onPress }) => {
   return (
@@ -20,7 +19,6 @@ const SearchBar = () => {
     setSearching(true);
     setLoading(true);
 
-    // Simula uma busca assíncrona por 3 segundos
     setTimeout(() => {
       setLoading(false);
       setSearching(false);
@@ -30,12 +28,20 @@ const SearchBar = () => {
   return (
     <>
       {!loading && (
+        <View style={{ alignItems: 'flex-start', position: 'relative' }}>
+          <Text style={styles.Text}>
+            Pesquise por marca ou fórmula</Text>
+          <Text style={{ fontSize: 10, color: "#ccc", padding: 8, right: 50 }}>
+            Ex.: Dipirona, etc...</Text>
+        </View>
+      )}
+      {!loading && (
         <View style={styles.container}>
-          {!searching && (
-            <>
-              <TextInput
-                placeholder="Pesquisar"
-                style={styles.input}
+         {!searching && (
+          <>
+            <TextInput
+              placeholder="Pesquisar"
+              style={styles.input}
               />
               <SearchButton onPress={handleSearch} />
             </>
@@ -81,6 +87,11 @@ const styles = StyleSheet.create({
   'input:hover': {
     backgroundColor: '#f6f6f6',
     borderColor: '#ccc',
+  },
+  Text: {
+    fontSize: 20,
+    color: "#fefefe",
+    padding: 8,
   },
 });
 
